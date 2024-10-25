@@ -1,0 +1,24 @@
+name: 'Clang-format Formatting Check'
+description: 'Waterloo Rocketry clang-format formatting check workflow'
+inputs:
+  clang-format-config-path:
+    description: 'Path to clang-format config file'
+    default: 'rocketlib/.clang-format'
+  c-source-files:
+    description: 'C source code files need to be checked'
+    default: '*.c *.h'
+runs:
+  using: "composite"
+  steps:
+      - name: Install clang-format 19
+        id: llvm-install
+        shell: bash
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 19
+          sudo apt install clang-format-19
+      - name: clang-format code formatting check
+        id: run-clang-format
+        shell: bash
+        run: clang-format-19 --dry-run -Werror --style=file:${{ inputs.clang-format-config-path }} ${{ inputs.c-source-files }}
