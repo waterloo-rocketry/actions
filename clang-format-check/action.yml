@@ -5,7 +5,7 @@ inputs:
     description: 'Path to clang-format config file'
     default: 'rocketlib/.clang-format'
   c-source-files:
-    description: 'C source code files need to be checked'
+    description: 'C source code files need to be checked, comma separated list'
     default: '*.c *.h'
 runs:
   using: "composite"
